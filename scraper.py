@@ -63,8 +63,8 @@ for (id, name) in zip(ids, names):
 
 
 to_store = {
-    "agenda": clean
+    "agendas": clean
 }
 
-with open("./data/agenda.json", 'w') as outfile:
+with open("./data/agendas.json", 'w') as outfile:
     json.dump(to_store, outfile, indent=2)
