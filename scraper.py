@@ -56,8 +56,8 @@ for (id, name) in zip(ids, names):
                 dict_buffer['id'] = id
                 dict_buffer['name'] = name
                 dict_buffer['agenda'] = clean_buffer
-        print(dict_buffer)
-        clean.append(dict_buffer)
+            print(dict_buffer)
+            clean.append(dict_buffer)
     else:
         print("> Empty")
 
