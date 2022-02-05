@@ -2,3 +2,5 @@
 .env.local
 data/
 *.xml
+*.txt
+*.json
