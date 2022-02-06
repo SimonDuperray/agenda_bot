@@ -1,13 +1,12 @@
-import discord, json, os, datetime
+import discord, json, os, datetime, TOKENS
 from discord.ext import commands
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from plistlib import load
-from rich import print
-from stringcolor import *
 
-load_dotenv()
+# load_dotenv()
 
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+# DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+DISCORD_TOKEN = TOKENS.DISCORD_TOKEN    
 
 intents = discord.Intents().default()
 intents.members = True
@@ -28,66 +27,62 @@ async def hello(ctx):
     await ctx.send("Hi !")
 
 @bot.command(name="dispo", help="Check availability")
-async def dispo(ctx):
-    availabilities = {
-        "available": [],
-        "unavailable": [],
-    }
-    now = datetime.datetime.now()
+async def dispo(ctx):  
+    en_cours = []
 
     with open('./data/agendas.json') as agendas:
         agendas = json.load(agendas)['agendas']
+    print(len(agendas))
+    if len(agendas)==0:
+        en_cours.append("Weekend")
+    else:
+        now = datetime.datetime.now()
+        now = now.replace(hour=9, minute=0, second=0, microsecond=0, day=7)
+        for agenda in agendas:
+            print(f"{agenda['name']}'s agenda: ")
+            for lesson in agenda['agenda']:
+                starth = int(lesson['Debut'][11:13])
+                startm = int(lesson['Debut'][14:16])
+                starts = int(lesson['Debut'][17:19])
+                endh = int(lesson['Fin'][11:13])
+                endm = int(lesson['Fin'][14:16])
+                ends = int(lesson['Fin'][17:19])
 
-    for agenda in agendas:
-        print(f"> {agenda['name']}")
-        for lesson in agenda['agenda']:
-            starth = int(lesson['Debut'][11:13])
-            startm = int(lesson['Debut'][14:16])
-            starts = int(lesson['Debut'][17:19])
-            endh = int(lesson['Fin'][11:13])
-            endm = int(lesson['Fin'][14:16])
-            ends = int(lesson['Fin'][17:19])
+                start=now.replace(hour=starth, minute=startm, second=starts, microsecond=0)
+                end=now.replace(hour=endh, minute=endm, second=ends, microsecond=0)
+
+                print(now)
+                
+                if end>now and start<now:
+                    if agenda['name'] not in en_cours:
+                        en_cours.append(agenda['name'])
+
+    if en_cours==[]:
+        en_cours.append("Personne n'est en cours actuellement")
+
+    if len(en_cours)==1:
+        if en_cours[0]=="Weekend":
+            print("Weekend")
+            name = "Pas cours..."
+            value = "Personne a cours aujourd'hui. Va te plutôt te reposer !"
+        if en_cours[0]=="Personne n'est en cours actuellement":
+            print("personne en cours")
+            name = "Ptit baby ?"
+            value = "Y a personne en cours, go caffet pour un ptit baby"
+    else:
+        print("en cours")
+        name="Heureusement qu'il y en a qui travaillent"
+        value=""
+        for student in en_cours:
+            value+="\n - "
+            value+=student
             
-            start=now.replace(hour=starth, minute=startm, second=starts, microsecond=0)
-            end=now.replace(hour=endh, minute=endm, second=ends, microsecond=0)
-
-            # if available...
-            if(start<now and end>now):
-                if agenda['name'] not in availabilities['unavailable']:
-                    availabilities['unavailable'].append(agenda['name'])
-            else:
-                if agenda['name'] not in availabilities['available']:
-                    availabilities['available'].append(agenda['name'])
-
-    # create embedded message
-    av_label = "Available"
-    unav_label = "Unavailable"
-    if len(availabilities['available'])>0:
-        avs = ""
-        for av in availabilities['available']:
-            avs+="\n - "
-            avs+=av
-    else:
-        avs = "There's nobody available for the moment"
-
-    if len(availabilities['unavailable'])>0:
-        unavs = ""
-        for unav in availabilities['unavailable']:
-            unavs+="\n - "
-            unavs+=unav
-    else:
-        unavs = "There's nobody unavailable for the moment"
 
 
     embed = discord.Embed(title="Availabilities", color=0x81455b)
     embed.set_author(name="Roqueboule", icon_url="https://cdn3.iconfinder.com/data/icons/school-174/48/school_bold-12-512.png")
-    embed.add_field(name=av_label, value=avs, inline=False)
-    embed.add_field(name=unav_label, value=unavs, inline=False)
+    embed.add_field(name=name, value=value, inline=False)
     await ctx.send(embed=embed)
-
-
-        
-
 
 if __name__ == "__main__":
     bot.run(DISCORD_TOKEN)
