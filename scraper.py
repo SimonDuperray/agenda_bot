@@ -1,9 +1,5 @@
-import requests, os, json, datetime, TOKENS
-# from dotenv import load_dotenv
+import requests, json, datetime, TOKENS
 
-# load_dotenv()
-
-# url = os.getenv('URL')
 url = TOKENS.URL
 
 with open("./data/students.json") as students:
