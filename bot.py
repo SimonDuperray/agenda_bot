@@ -73,7 +73,7 @@ async def dispo(ctx):
             value+=student
             
     embed = discord.Embed(title="Availabilities", color=0x81455b)
-    embed.set_author(name="ESEO Grande", icon_url="https://cdn3.iconfinder.com/data/icons/school-174/48/school_bold-12-512.png")
+    embed.set_author(name="ESEO Grande à Angers", icon_url="https://cdn3.iconfinder.com/data/icons/school-174/48/school_bold-12-512.png")
     embed.add_field(name=name, value=value, inline=False)
     await ctx.send(embed=embed)
 
