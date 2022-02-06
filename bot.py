@@ -37,7 +37,7 @@ async def dispo(ctx):
         en_cours.append("Weekend")
     else:
         now = datetime.datetime.now()
-        now = now.replace(hour=9, minute=0, second=0, microsecond=0, day=7)
+        # now = now.replace(hour=9, minute=0, second=0, microsecond=0, day=7)
         for agenda in agendas:
             print(f"{agenda['name']}'s agenda: ")
             for lesson in agenda['agenda']:
