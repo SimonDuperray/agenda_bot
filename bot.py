@@ -77,11 +77,7 @@ async def dispo(ctx):
 
                 print(f"   > Lesson: {lesson['Libelle']} - {end>now and start<now}")
 
-                if end>now and start<now:
-                    states.append(True)
-                else:
-                    states.append(False)
-                    
+                states.append(True if end>now and start<now else False)
 
             if True in states:
                 isBusy_list.append('yes')
@@ -108,6 +104,7 @@ async def dispo(ctx):
             header=header,
             body=body
         )
+        value="```\n"+str(value)+"\n```"
 
     embed.add_field(name=name, value=value, inline=False)
     await ctx.send(embed=embed)
