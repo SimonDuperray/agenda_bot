@@ -14,8 +14,6 @@ current_datetime = "20220202"
 url = url.replace("YYYYMMDD", current_datetime)
 
 ids = [n['id'] for n in students]
-ids_str = [str(n['id']) for n in students]
-print(ids_str)
 names = [n['name'] for n in students]
 
 clean = []
