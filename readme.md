@@ -24,7 +24,13 @@ You have to create a <i>students.json</i> file in <b>data</b> folder and to fill
 }
 ```
 
-You also have to create a <i>agendas.json</i> file in <b>data</b> folder. It is in this file that all agendas will be stored.
+You also have to create a <i>agendas.json</i> file in <b>data</b> folder. It is in this file that all agendas will be stored. <i>agendas.json</i> must follows the following format:
+
+```json
+{
+    "agendas": []
+}
+```
 
 I didn't want that the scraper will send request to the proxy for every Discord command, so I've programmed the execution of the scraper every day at 1:00 am with crontab with the following command:
 
