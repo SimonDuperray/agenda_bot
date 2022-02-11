@@ -9,7 +9,7 @@ current_datetime = str(datetime.datetime.now())[:10]
 current_datetime = current_datetime.replace("-", "")
 
 # TODO: remove this date for production
-current_datetime = "20220202"
+current_datetime = "20220207"
 
 url = url.replace("YYYYMMDD", current_datetime)
 
@@ -23,6 +23,8 @@ for (id, name) in zip(ids, names):
     lessons = json.loads(requests.get(url_buffer).content.decode('utf-8').replace("'", '"'))
     clean_buffer, dict_buffer = [], {}
     print("=====\n"+str(name)+"\n=====")
+    dict_buffer['id'] = id
+    dict_buffer['name'] = name
     if len(lessons)>0:
         for lesson in lessons:
             print(str(lesson)+"\n")
@@ -33,15 +35,11 @@ for (id, name) in zip(ids, names):
             lesson.pop('LibelleLong')
             lesson.pop('SaisieAbsence')
             clean_buffer.append(lesson)
-            dict_buffer['id'] = id
-            dict_buffer['name'] = name
             dict_buffer['agenda'] = clean_buffer
-        if dict_buffer=={}:
-            pass
-        else:
-            clean.append(dict_buffer)
     else:
+        dict_buffer['agenda'] = []
         print("> Empty")
+    clean.append(dict_buffer)
 
 to_store = {
     "agendas": clean
