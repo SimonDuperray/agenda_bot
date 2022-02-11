@@ -9,7 +9,7 @@ current_datetime = str(datetime.datetime.now())[:10]
 current_datetime = current_datetime.replace("-", "")
 
 # TODO: remove this date for production
-current_datetime = "20220207"
+# current_datetime = "20220207"
 
 url = url.replace("YYYYMMDD", current_datetime)
 

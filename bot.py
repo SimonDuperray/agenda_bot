@@ -51,13 +51,11 @@ async def dispo(ctx):
     embed = discord.Embed(title='Availabilites', color=0x81455b)
     embed.set_author(name="ESEO Grande à Angers", icon_url="https://cdn3.iconfinder.com/data/icons/school-174/48/school_bold-12-512.png")
     
-
-    
     students_list, isBusy_list, types_list, lessons_list = [], [], [], []
     for student in agendas:
         students_list.append(student['name'].split(" ")[0])
         now = datetime.datetime.now()
-        now = now.replace(hour=14, minute=0, second=0, microsecond=0, day=7)
+        # now = now.replace(hour=14, minute=0, second=0, microsecond=0, day=7)
         print(f"> Student: {student['name']}\n{student['agenda']}")
         states, types = [], []
         for lesson in student['agenda']:
