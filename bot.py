@@ -24,29 +24,11 @@ async def disconnect(ctx):
     else:
         await ctx.send("You're not allowed to run this command!")
 
-@bot.command(name="array", help="Test for embedding arrays in message")
-async def array(ctx):
-    output = t2a(
-        header=header,
-        body=[
-            ["Alexandre", "yes", "NT", "BDDR"], 
-            ["Marcelin", "no", "T", "Scrum"], 
-        ]
-    )
-    output = "```\n"+str(output)+"\n```"
-    # await ctx.send(f"```\n{output}\n```")
-
-    embed = discord.Embed(title="Availabilities", color=0x81455b)
-    embed.set_author(name="ESEO Grande à Angers", icon_url="https://cdn3.iconfinder.com/data/icons/school-174/48/school_bold-12-512.png")
-    embed.add_field(name="eee", value=output, inline=False)
-    await ctx.send(embed=embed)
-
 @bot.command(name="dispo", help="Check availability of students")
 async def dispo(ctx):
     
     with open("./data/agendas.json") as agendas:
         agendas = json.load(agendas)['agendas']
-
 
     embed = discord.Embed(title='Availabilites', color=0x81455b)
     embed.set_author(name="ESEO Grande à Angers", icon_url="https://cdn3.iconfinder.com/data/icons/school-174/48/school_bold-12-512.png")
