@@ -35,7 +35,8 @@ You also have to create a <i>agendas.json</i> file in <b>data</b> folder. It is 
 I didn't want that the scraper will send request to the proxy for every Discord command, so I've programmed the execution of the scraper every day at 1:00 am with crontab with the following command:
 
 ```python
-0 1 * * * sudo /usr/bin/python3 /home/pi/Documents/agenda_bot/scraper.py > /home/pi/Documents/agenda_bot/logs/bot_log.log 2>&1
+@reboot sudo /usr/bin/python3 /home/pi/Documents/agenda_bot/bot.py > /home/pi/Documents/agenda_bot/logs/bot_log.log 2>&1
+0 1 * * * sudo /usr/bin/python3 /home/pi/Documents/agenda_bot/scraper.py > /home/pi/Documents/agenda_bot/logs/scraper_log.log 2>&1
 ```
 
 For each Discord command, the script will parse the json file and not send request to the proxy.
