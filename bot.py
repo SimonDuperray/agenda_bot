@@ -1,8 +1,8 @@
-import discord, json, datetime, TOKENS
+import discord, json, datetime, module.TOKENS as t
 from discord.ext import commands
 from table2ascii import table2ascii as t2a, PresetStyle
 
-DISCORD_TOKEN = TOKENS.DISCORD_TOKEN    
+DISCORD_TOKEN = t.getToken()    
 
 intents = discord.Intents().default()
 intents.members = True

@@ -1,6 +1,6 @@
-import requests, json, datetime, TOKENS
+import requests, json, datetime, module.TOKENS as t
 
-url = TOKENS.URL
+url = t.getUrl()
 
 with open("./data/students.json") as students:
     students = json.load(students)['students']
